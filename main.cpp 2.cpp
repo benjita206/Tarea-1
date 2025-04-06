@@ -14,13 +14,13 @@ private:
 public:
   Pregunta(string enunciado, int nivelTaxonomico);
   
-  ~Pregunta();
+  virtual ~Pregunta();
   string getEnunciado();
   int getNivelTaxonomico();
   void setEnunciado(string enunciado);
   void setNivelTaxonomico(int nivelTaxonomico);
-  void mostrarPreguntas();
-  void mostrarNivelTaxonomico();
+  virtual void mostrar();
+  virtual void mostrarNivelTaxonomico();
 };
 
 // Contructor de Pregunta
@@ -31,7 +31,7 @@ Pregunta::Pregunta(string enunciado, int nivelTaxonomico){
 
 // Destructor de Pregunta con su mensaje
 Pregunta::~Pregunta(){
-  cout << "Se ha eliminado la Pregunta" << endl;
+  std::cout << "Se ha eliminado la Pregunta" << endl;
   
 }
 
@@ -43,178 +43,244 @@ int Pregunta::getNivelTaxonomico(){
   return this->nivelTaxonomico;
 }
 
-
 void Pregunta::setEnunciado(string enunciado){
   this->enunciado=enunciado;
- cout< "---- Niveles Taxonomicos ----" << endl;
+  cout<< "---- Niveles Taxonomicos ----" << endl;
   cout << "1. Recordar" << endl;
   cout << "2. Entender" << endl;
   cout << "3. Aplicar" << endl;
   cout << "4. Analizar" << endl;
   cout << "5. Evaluar" << endl;
   cout << "6. Crear" << endl;
-  cout << "Ingrese el nivel Taxonomico "
+  cout << "Ingrese el nivel Taxonomico: " << endl;
 
+}
 
+void Pregunta::setNivelTaxonomico(int nivel) {
+  if (nivel >= 1 && nivel <= 5) {
+      this->nivelTaxonomico = nivel;
+  } else {
+      cout << "Nivel inválido" << endl;
+  }
+}
 
 // Metodos de Pregunta
-void Pregunta::mostrarPreguntas(){
-  
+void Pregunta::mostrar(){
+  cout << "Enunciado: " << enunciado << endl;
+  cout << "Nivel: " << nivelTaxonomico << endl;
 }
 
 void Pregunta::mostrarNivelTaxonomico(){
   cout<<"el nivel taxonomico es "<<this->nivelTaxonomico<<endl;
 }
 
-//A
+//Segunda Clase: Verdadero y Falso
 
-class VF : public Pregunta{
-private:
-  bool VyF;
-  string justificacion;
-  bool respuestaCorrecta;
-
-public:
-  VF(bool VyF, string justificacion, bool respuestaCorrecta, string enunciado, int nivelTaxonomico);
-  bool getVyF();
-  string getJustificacion();
-  bool getRespuestaCorrecta();
-  void setVyF();
-  void setJustificacion();
-  void setRespuestaCorrecta();
-  void test();
-};
-
-VF::VF(bool VyF, string justificacion, bool respuestaCorrecta):Pregunta(enunciado, nivelTaxonomico){
-
-this->VyF=VyF;
-this->=VyF;
-}//Getters y Setters
-
-
-
-void test{
-  cout << "Ingrese el enunciado de la pregunta:" << endl;
-  cin >> this->enunciado;
-
-  cout << "Ingrese la respuesta correcta: " << endl;
-  cin >> this->respuestaCorrectaVF;
-
-  if(respuestaCorrectaVF == false) {
-    cout << "Ingrese la justificación de la respuesta: " << endl;
-    cin >> this->justificacion;
-  }
-}
-
-class Alternativa : public Pregunta{
+class VerdaderoFalso : public Pregunta {
   private:
-  vector<string> alternativas;
-  int respuestaCorrecta;
+    bool respuesta;
+    string justificacion;
+
   public:
-   Alternativa(vector<string> alternativas, int respuestaCorrecta, string enunciado, int nivelTaxonomico);
-   ~Alternativa();
-   getrespuestaCorrecta();
-   setrespuestacorrecta(int respuestaCorrecta);
-   void testeo();
+    VerdaderoFalso(string enunciado, int nivel, bool respuesta, string justificacion);
+    ~VerdaderoFalso();
+    bool getVyF();
+    string getJustificacion();
+    bool getRespuestaCorrecta();
+    void setVyF();
+    void setJustificacion();
+    void setRespuestaCorrecta();
+    void test();
+    void mostrar();
 };
 
-
-Alternativa::Alternativa(vector<string> alternativas, int respuestaCorrecta, string enunciado, int nivelTaxonomico):Pregunta(enunciado, nivelTaxonomico){
-  this->alternativas.pushback(alternativas);
-  this->respuestaCorrecta = respuestaCorrecta;
-  this->enunciado = enunciado;
-
-  
-
-}
-Alternativa::~Alternativa(){
-
+// Constructor de Verdadero y Falso
+VerdaderoFalso::VerdaderoFalso(string enunciado, int nivel, bool respuesta, string justificacion)
+  : Pregunta(enunciado, nivel) {
+  this->respuesta = respuesta;
+  this->justificacion = justificacion;
 }
 
-void Alternativa::testeo{
-  int cantidadAlternativas
-  cout<<"ingrese la cantidad de alternativas"
-  cin>>this->cantidadAlternativas;
-  for(i=0,i<this->cantidadAlternativas;i++){
-    cout<<"ingrese el enunciado:"<<endl;
-    cin>>this->enunciado;
-    cout<<"ingresa la alternativa:"<<endl;
-    this->alternativas.pushback(Alternativa);
+// Destructor de Verdadero y Falso
+VerdaderoFalso::~VerdaderoFalso(){
+
+}
+
+//Getters y Setters
+
+void VerdaderoFalso::mostrar() {
+  cout << "Tipo: Verdadero/Falso" << endl;
+  cout << "Enunciado: " << getEnunciado() << endl;
+  cout << "Nivel taxonómico: " << getNivelTaxonomico() << endl;
+  cout << "Respuesta: " << (respuesta ? "Verdadero" : "Falso") << endl;
+  if (!respuesta) {
+    cout << "Justificación: " << justificacion << endl;
   }
 }
+  
+// Tercera Clase: Alternativa
+class Alternativa : public Pregunta {
+  private:
+      vector<string> alternativas;
+      int respuestaCorrecta; // Índice de la alternativa correcta
+  
+  public:
+      Alternativa(string enunciado, int nivel, vector<string> alternativas, int respuestaCorrecta);
+      ~Alternativa();
+  
+      vector<string> getAlternativas();
+      int getRespuestaCorrecta();
+  
+      void setAlternativas(vector<string> alternativas);
+      void setRespuestaCorrecta(int respuestaCorrecta);
+      void testeo();
 
-// Segunda Clase: Item
-class Item : public Pregunta{
-private:
-  int cantidadPregunta;
-  string NombreItem;
-  vector<Pregunta*> preguntas;
+};
 
-public:
-  Item(int cantidadItem, string NombreItem, Pregunta * pregunta);
-  ~Item();
-  int getcantidadPregunta();
-  string getNombreItem();
-  void setCantidadPregunta(int cantidadPregunta);
-  void setNombreItem(string NombreItem);
+// Constructor de Alternativa
+Alternativa::Alternativa(string enunciado, int nivel, vector<string> alternativas, int respuestaCorrecta)
+: Pregunta(enunciado, nivel) {
+    this->alternativas = alternativas;
+    this->respuestaCorrecta = respuestaCorrecta;
+}
+
+// Destructor de Alternativas
+Alternativa::~Alternativa() {
+  cout << "Destruyendo Alternativa" << endl;
+}
+
+//Getters y Setters
+
+vector<string> Alternativa::getAlternativas() {
+  return alternativas;
+}
+
+int Alternativa::getRespuestaCorrecta() {
+  return respuestaCorrecta;
+}
+
+void Alternativa::setAlternativas(vector<string> alternativas) {
+  this->alternativas = alternativas;
+}
+
+void Alternativa::setRespuestaCorrecta(int respuestaCorrecta) {
+  this->respuestaCorrecta = respuestaCorrecta;
+}
+
+// Metodos de Alternativas
+void Alternativa::testeo() {
+  int cantidadAlternativas;
+  string alt;
+  string enunciado;
+
+  cout << "Ingrese la cantidad de alternativas: ";
+  cin >> cantidadAlternativas;
+  cin.ignore(); // Para limpiar el buffer del enter
+
+  vector<string> nuevasAlternativas;
+
+  for (int i = 0; i < cantidadAlternativas; i++) {
+      cout << "Ingrese la alternativa " << (i + 1) << ": ";
+      getline(cin, alt);
+      nuevasAlternativas.push_back(alt);
+  }
+
+  this->setAlternativas(nuevasAlternativas);
+
+  int correcta;
+  cout << "Ingrese el índice de la respuesta correcta (0 a " << cantidadAlternativas - 1 << "): ";
+  cin >> correcta;
+  this->setRespuestaCorrecta(correcta);
+}
+
+// Cuarta Clase: Item
+class Item {
+  private:
+    string nombre;
+    vector<Pregunta*> preguntas;
+    
+
+  public:
+    Item(string nombre);
+    ~Item();
+
+    void agregarPregunta(Pregunta* p);
+    string getNombre();
+    void mostrar();
+    vector<Pregunta*> getPreguntas();
 };
 
 // Constructor de Item
-Item::Item(int cantidadPregunta, string NombreItem, Pregunta * pregunta){
-  this->cantidadPregunta = cantidadPregunta;
-  this->NombreItem=NombreItem;
-  this->preguntas = preguntas;
+Item::Item(string nombre){
+  this->nombre=nombre;
 } 
 
 // Destructor de Item
-Item::~Item(){
-  cout<<"Destruyendo item"<<endl;
+Item::~Item() {
+  for (size_t i = 0; i < preguntas.size(); i++) {
+    delete preguntas[i];
+  }
 }
 
 // Getters y setters
-int Item::getcantidadPregunta(){
-  return this->cantidadPregunta;
+
+string Item::getNombre(){
+  return this->nombre;
 }
 
-string Item::getNombreItem(){
-  return this->NombreItem;
+void Item::agregarPregunta(Pregunta* p) {
+  preguntas.push_back(p);
 }
 
-void Item::setCantidadPregunta(int cantidadPregunta){
-  this->cantidadPregunta = cantidadPregunta;
-  cout<<"la prueba posee "<<cantidadPregunta<<" items"<<endl;
+// Metodos de Item
+void Item::mostrar() {
+  cout << "Item: " << nombre << endl;
+  for (size_t i = 0; i < preguntas.size(); i++) {
+    cout << "Pregunta " << i + 1 << ":" << endl;
+    preguntas[i]->mostrar();
+    cout << endl;
+  }
 }
-
-void Item::setNombreItem(string NombreItem){
-  this->NombreItem=NombreItem;
-  cout<<"el nombre del item es "<<NombreItem<<endl;
+vector<Pregunta*> Item::getPreguntas() {
+  return preguntas;
 }
+// Quinta clase: Prueba
+class Prueba {
+  private:
+    vector<Item*> Items;
+    int tiempo;
 
+  public:
+    Prueba();
+    ~Prueba();
 
-class Prueba : public Item{
-private:
-  int cantidadItem;
-  int tiempo;
-  Pregunta *pregunta;
-  vector<Item*>Items;
+    void crearItem();
+    void actualizarItem(Item* item);
+    void eliminarItem(Item* item);
+    void calcularTiempo();
+    void mostrarItem();
+    void mostrarTiempo();
+    void menu();
 
-public:
-  Prueba(Item* item,Pregunta* preguntas, int tiempo);
-  ~Prueba();
-  void menu();
-  void crearItem();
-  void actualizarItem(Item *item);
-  void eliminarItem(Item *item);
-  void mostrarItem();
-  void mostrarTiempo();
+    Pregunta* crearVerdaderoFalso();
+    Pregunta* crearAlternativa();
 };
 
-Prueba::Prueba( Item* item,Pregunta* preguntas, int tiempo){
-  this->pregunta=preguntas;
-  this->tiempo = tiempo;
-  
-  
+Prueba::Prueba() {
+  this->tiempo = 0;
 }
+
+Prueba::~Prueba() {
+  cout << "Destruyendo prueba" << endl;
+  for (size_t i = 0; i < Items.size(); ++i) {
+    delete Items[i];
+  }
+}
+
+Prueba::Prueba(){
+  this->tiempo = 0;
+}
+
 void Prueba::menu(){
   int opcion;
   cout<<"1. Crear item"<<endl;
@@ -230,16 +296,39 @@ void Prueba::menu(){
       crearItem();
 
     case 2:
-      actualizarItem(Item *item);
+      cout << "Actualizar item aún no implementado.\n";
+      break;
 
     case 3:
-      eliminarItem(Item *item);
+      if (Items.empty()) {
+        cout << "No hay items para eliminar.\n";
+      }
+
+      else {
+        int index;
+        mostrarItem();
+        cout << "Ingrese el número del item a eliminar: ";
+        cin >> index;
+        cin.ignore();
+
+        if (index >= 1 && index <= Items.size()) {
+          eliminarItem(Items[index - 1]);
+          cout << "Item eliminado.\n";
+        } 
+        
+        else {
+          cout << "Índice no válido.\n";
+        }
+      }
+      break;
 
     case 4:
       mostrarItem();
 
    case 5:
-      mostrarTiempo();
+    calcularTiempo();
+    mostrarTiempo();
+    break;
 
     case 6:
       cout<<"Saliendo del programa"<<endl;
@@ -250,96 +339,154 @@ void Prueba::menu(){
   }
 }
 
+void Prueba::crearItem() {
+  int cantidadItem, cantidadPregunta, tipoPregunta;
+  string nombreItem;
 
-Prueba::~Prueba(){
-  cout<<"Destruyendo prueba"<<endl;
-}
-
-void Prueba::crearItem(){
-  string NombreItem, enunciado;
-  int cantidadPregunta, tipoPregunta;
-
-  cout << "ingresa la cantidad de items:" << endl;
+  cout << "Ingresa la cantidad de items: ";
   cin >> cantidadItem;
-  
-  for(int i = 0; i < cantidadItem; i++) {
-    cout << "ingresa el nombre del item:" << endl;
-    cin >> NombreItem;
-  
-    cout << "ingresa la cantidad de preguntas:" << endl;
+  cin.ignore();
+
+  for (int i = 0; i < cantidadItem; i++) {
+    cout << "Ingresa el nombre del item: ";
+    getline(cin, nombreItem);
+
+    Item* item = new Item(nombreItem);
+
+    cout << "Ingresa la cantidad de preguntas: ";
     cin >> cantidadPregunta;
-    
-    for(int j = 0; j < cantidadPregunta; j++) {
-      cout << "Pregunta " << j+1 <<endl;
-      cout << "\n----Tipo de Pregunta----" << endl;
-      cout << "1. Verdadero o Falso" << endl;
+    cin.ignore();
+
+    for (int j = 0; j < cantidadPregunta; j++) {
+      cout << "\nPregunta " << j + 1 << ":" << endl;
+      cout << "1. Verdadero/Falso" << endl;
       cout << "2. Alternativas" << endl;
 
-      while(true) {
-        cout << "ingresa el tipo de pregunta:" << endl;
+      while (true) {
+        cout << "Elige tipo de pregunta: ";
         cin >> tipoPregunta;
-  
-        if(tipoPregunta == 1) {
-          verdaderoFalso();
-          break;
-        }
-          
-        else if(tipoPregunta == 2) {
-          alternativas();
-          break;
+        cin.ignore();
 
+        Pregunta* p = nullptr;
+
+        if (tipoPregunta == 1) {
+          p = crearVerdaderoFalso();
+          break;
+        } else if (tipoPregunta == 2) {
+          p = crearAlternativa();
+          break;
+        } else {
+          cout << "Opción inválida, intenta nuevamente." << endl;
         }
-        else{
-          cout << "Opcion no valida, intente de nuevo." << endl;
-        }
+      }
+
+      if (tipoPregunta == 1)
+        item->agregarPregunta(crearVerdaderoFalso());
+      else if (tipoPregunta == 2)
+        item->agregarPregunta(crearAlternativa());
+    }
+
+    Items.push_back(item);
+  }
+}
+
+Pregunta* Prueba::crearVerdaderoFalso() {
+  string enunciado, justificacion;
+  int nivel;
+  bool respuesta;
+
+  cout << "Ingrese enunciado: ";
+  getline(cin, enunciado);
+
+  cout << "Ingrese nivel taxonómico (1-5): ";
+  cin >> nivel;
+  cin.ignore();
+
+  cout << "Ingrese la respuesta (1 para Verdadero, 0 para Falso): ";
+  cin >> respuesta;
+  cin.ignore();
+
+  if (!respuesta) {
+    cout << "Ingrese justificación: ";
+    getline(cin, justificacion);
+  }
+
+  return new VerdaderoFalso(enunciado, nivel, respuesta, justificacion);
+}
+Pregunta* Prueba::crearAlternativa() {
+  string enunciado;
+  int nivel, cantidad, correcta;
+  vector<string> alternativas;
+  string alt;
+
+  cout << "Ingrese enunciado: ";
+  getline(cin, enunciado);
+
+  cout << "Ingrese nivel taxonómico (1-5): ";
+  cin >> nivel;
+  cin.ignore();
+
+  cout << "Ingrese cantidad de alternativas: ";
+  cin >> cantidad;
+  cin.ignore();
+
+  for (int i = 0; i < cantidad; i++) {
+    cout << "Alternativa " << i << ": ";
+    getline(cin, alt);
+    alternativas.push_back(alt);
+  }
+
+  cout << "Ingrese índice de la respuesta correcta (0 a " << cantidad - 1 << "): ";
+  cin >> correcta;
+  cin.ignore();
+
+  return new Alternativa(enunciado, nivel, alternativas, correcta);
+}
+void Prueba::eliminarItem(Item* item) {
+  for (size_t i = 0; i < Items.size(); i++) {
+    if (Items[i] == item) {
+      delete Items[i];
+      Items.erase(Items.begin() + i);
+      break;
+    }
+  }
+}
+
+void Prueba::mostrarItem() {
+  for (size_t i = 0; i < Items.size(); i++) {
+    cout << "\n=== Item " << i + 1 << " ===" << endl;
+    Items[i]->mostrar();
+  }
+}
+void Prueba::calcularTiempo() {
+  tiempo = 0;
+  for (size_t i = 0; i < Items.size(); i++) {
+    Item* item = Items[i];
+    // Necesitamos acceso a las preguntas internamente, así que ajusta Item si es necesario
+    // Aquí asumimos que agregas un método público:
+    // vector<Pregunta*> Item::getPreguntas();
+    // Si no lo tienes, avísame y te ayudo a agregarlo
+
+    vector<Pregunta*> preguntas = item->getPreguntas();
+
+    for (size_t j = 0; j < preguntas.size(); j++) {
+      // Deducción de tipo por dynamic_cast
+      if (dynamic_cast<VerdaderoFalso*>(preguntas[j])) {
+        tiempo += 1; // 1 minuto
+      } else if (dynamic_cast<Alternativa*>(preguntas[j])) {
+        tiempo += 2; // 2 minutos
       }
     }
   }
 }
 
-void Prueba::actualizarItem(Item *item){
-  Item * nuevo_item;
-  nuevo_item  = crearItem();
-  
-  for(int i=0;i<Items.size();i++){
-    
-    if(Items[i]==item){
-      this->Items[i]=nuevo_item;
-    }
-  } 
+
+void Prueba::mostrarTiempo() {
+  cout << "El tiempo de la prueba es de " << tiempo << " minutos." << endl;
 }
-  
-void Prueba::eliminarItem(Item *item){
-  for(int i=0;i<Items.size();i++)
-    if(Items[i]==item){
-      Items.erase(Items.begin()+i);
-    }
-}
-
-void Prueba::mostrarItem(){
-  for(int i=0;i<Items.size();i++){
-    cout << "----Información del item----" << Items[i]<<endl;
-  }
-}
-  
-void Prueba::mostrarTiempo(){
-  cout << "El tiempo de la prueba es de " << this->tiempo << endl;
-}
-
-
-
-
 
 int main(){
 
-  Prueba * e1 = new Prueba()
-  e1->menu();
-  e1->mostrarItem();
-  e1->mostrarTiempo();
-  e1->eliminarItem(i1);
-  e1->mostrarItem();
-  e1->mostrarTiempo();
-  e1->actualizarItem(i1);
-  e1->mostrarItem();
+  
 }
 
