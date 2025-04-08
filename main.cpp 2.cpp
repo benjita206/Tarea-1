@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include<exception>
 #include <vector>
 
 using namespace std;
@@ -277,10 +276,6 @@ Prueba::~Prueba() {
   }
 }
 
-Prueba::Prueba(){
-  this->tiempo = 0;
-}
-
 void Prueba::menu(){
   int opcion;
   cout<<"1. Crear item"<<endl;
@@ -367,25 +362,21 @@ void Prueba::crearItem() {
         cin >> tipoPregunta;
         cin.ignore();
 
-        Pregunta* p = nullptr;
-
         if (tipoPregunta == 1) {
-          p = crearVerdaderoFalso();
+          item->agregarPregunta(crearVerdaderoFalso());
           break;
-        } else if (tipoPregunta == 2) {
-          p = crearAlternativa();
+        } 
+        
+        else if (tipoPregunta == 2) {
+          item->agregarPregunta(crearAlternativa());
           break;
-        } else {
+        } 
+        
+        else {
           cout << "Opción inválida, intenta nuevamente." << endl;
         }
       }
-
-      if (tipoPregunta == 1)
-        item->agregarPregunta(crearVerdaderoFalso());
-      else if (tipoPregunta == 2)
-        item->agregarPregunta(crearAlternativa());
     }
-
     Items.push_back(item);
   }
 }
