@@ -271,7 +271,7 @@ Prueba::Prueba() {
 
 Prueba::~Prueba() {
   cout << "Destruyendo prueba" << endl;
-  for (size_t i = 0; i < Items.size(); ++i) {
+  for (size_t i = 0; i < Items.size(); i++) {
     delete Items[i];
   }
 }
@@ -291,6 +291,12 @@ void Prueba::menu(){
       crearItem();
 
     case 2:
+      Item * newitem;
+      int item_actualizar
+      newitem = crearItem();
+      cout<<"ingrese el item a actualizar:"<<endl;
+      cin>>item_actualizar;
+      actualizarItem(newItem,item_actualizar);
       cout << "Actualizar item aún no implementado.\n";
       break;
 
@@ -433,6 +439,12 @@ Pregunta* Prueba::crearAlternativa() {
 
   return new Alternativa(enunciado, nivel, alternativas, correcta);
 }
+void Prueba::actualizarItem(Item *item, int item_actualizar){
+for(size_t i=0; i< Items.size; i++){
+    if(Items[i]==item){
+      Items[i] = item;
+    }
+ }
 void Prueba::eliminarItem(Item* item) {
   for (size_t i = 0; i < Items.size(); i++) {
     if (Items[i] == item) {
