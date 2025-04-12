@@ -291,12 +291,7 @@ void Prueba::menu(){
       crearItem();
 
     case 2:
-      Item * newitem;
-      int item_actualizar
-      newitem = crearItem();
-      cout<<"ingrese el item a actualizar:"<<endl;
-      cin>>item_actualizar;
-      actualizarItem(newItem,item_actualizar);
+      actualizarItem(Items[index-1]);
       cout << "Actualizar item aún no implementado.\n";
       break;
 
@@ -439,12 +434,56 @@ Pregunta* Prueba::crearAlternativa() {
 
   return new Alternativa(enunciado, nivel, alternativas, correcta);
 }
-void Prueba::actualizarItem(Item *item, int item_actualizar){
-for(size_t i=0; i< Items.size; i++){
-    if(Items[i]==item){
-      Items[i] = item;
+void Prueba::actualizarItem(Item* item) {
+    vector<Pregunta*> preguntas = item->getPreguntas();
+
+    if (preguntas.empty()) {
+        cout << "Este ítem no tiene preguntas.\n";
+        return;
     }
- }
+
+    cout << "\nPreguntas en el item '" << item->getNombre() << "':\n";
+    for (size_t i = 0; i < preguntas.size(); ++i) {
+        cout << i + 1 << ". ";
+        preguntas[i]->mostrar();
+        cout << endl;
+    }
+
+    int indice;
+    cout << "Ingrese el número de la pregunta que desea actualizar: ";
+    cin >> indice;
+    cin.ignore();
+
+    if (indice < 1 || indice > preguntas.size()) {
+        cout << "Índice inválido.\n";
+        return;
+    }
+
+    // Eliminar la antigua
+    delete preguntas[indice - 1];
+
+    // Elegir nuevo tipo
+    int tipo;
+    cout << "Seleccione el nuevo tipo de pregunta:\n1. Verdadero/Falso\n2. Alternativas\nOpción: ";
+    cin >> tipo;
+    cin.ignore();
+
+    Pregunta* nueva = nullptr;
+    if (tipo == 1) {
+        nueva = crearVerdaderoFalso();
+    } else if (tipo == 2) {
+        nueva = crearAlternativa();
+    } else {
+        cout << "Tipo inválido. Cancelando actualización.\n";
+        return;
+    }
+
+    // Reemplazar
+    preguntas[indice - 1] = nueva;
+
+    cout << "Pregunta actualizada exitosamente.\n";
+}
+
 void Prueba::eliminarItem(Item* item) {
   for (size_t i = 0; i < Items.size(); i++) {
     if (Items[i] == item) {
