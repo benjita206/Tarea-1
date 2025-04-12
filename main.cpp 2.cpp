@@ -12,7 +12,7 @@ private:
 
 public:
   Pregunta(string enunciado, int nivelTaxonomico);
-  
+
   virtual ~Pregunta();
   string getEnunciado();
   int getNivelTaxonomico();
@@ -31,7 +31,7 @@ Pregunta::Pregunta(string enunciado, int nivelTaxonomico){
 // Destructor de Pregunta con su mensaje
 Pregunta::~Pregunta(){
   std::cout << "Se ha eliminado la Pregunta" << endl;
-  
+
 }
 
 string Pregunta::getEnunciado(){
@@ -116,20 +116,20 @@ void VerdaderoFalso::mostrar() {
     cout << "Justificación: " << justificacion << endl;
   }
 }
-  
+
 // Tercera Clase: Alternativa
 class Alternativa : public Pregunta {
   private:
       vector<string> alternativas;
       int respuestaCorrecta; // Índice de la alternativa correcta
-  
+
   public:
       Alternativa(string enunciado, int nivel, vector<string> alternativas, int respuestaCorrecta);
       ~Alternativa();
-  
+
       vector<string> getAlternativas();
       int getRespuestaCorrecta();
-  
+
       void setAlternativas(vector<string> alternativas);
       void setRespuestaCorrecta(int respuestaCorrecta);
       void testeo();
@@ -197,7 +197,7 @@ class Item {
   private:
     string nombre;
     vector<Pregunta*> preguntas;
-    
+
 
   public:
     Item(string nombre);
@@ -206,7 +206,8 @@ class Item {
     void agregarPregunta(Pregunta* p);
     string getNombre();
     void mostrar();
-    vector<Pregunta*> getPreguntas();
+    vector<Pregunta*>& getPreguntas();
+
 };
 
 // Constructor de Item
@@ -240,9 +241,10 @@ void Item::mostrar() {
     cout << endl;
   }
 }
-vector<Pregunta*> Item::getPreguntas() {
-  return preguntas;
+vector<Pregunta*>& Item::getPreguntas() {
+    return preguntas;
 }
+
 // Quinta clase: Prueba
 class Prueba {
   private:
@@ -285,14 +287,27 @@ void Prueba::menu(){
   cout<<"5. Mostrar tiempo"<<endl;
   cout<<"6. Salir"<<endl;
   cin>>opcion;
-  
+
   switch(opcion){
     case 1:
       crearItem();
 
     case 2:
-      actualizarItem(Items[index-1]);
-      cout << "Actualizar item aún no implementado.\n";
+      if (Items.empty()) {
+        cout << "No hay items para actualizar.\n";
+      } else {
+        int index;
+        mostrarItem();
+        cout << "Ingrese el número del item a actualizar: ";
+        cin >> index;
+        cin.ignore();
+
+        if (index >= 1 && index <= Items.size()) {
+          actualizarItem(Items[index - 1]);
+        } else {
+          cout << "Índice no válido.\n";
+        }
+      }
       break;
 
     case 3:
@@ -311,7 +326,7 @@ void Prueba::menu(){
           eliminarItem(Items[index - 1]);
           cout << "Item eliminado.\n";
         } 
-        
+
         else {
           cout << "Índice no válido.\n";
         }
@@ -367,12 +382,12 @@ void Prueba::crearItem() {
           item->agregarPregunta(crearVerdaderoFalso());
           break;
         } 
-        
+
         else if (tipoPregunta == 2) {
           item->agregarPregunta(crearAlternativa());
           break;
         } 
-        
+
         else {
           cout << "Opción inválida, intenta nuevamente." << endl;
         }
@@ -529,6 +544,5 @@ void Prueba::mostrarTiempo() {
 
 int main(){
 
-  
-}
 
+}
