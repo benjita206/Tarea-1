@@ -542,7 +542,11 @@ void Prueba::mostrarTiempo() {
   cout << "El tiempo de la prueba es de " << tiempo << " minutos." << endl;
 }
 
-int main(){
-
-
+int main() {
+    Prueba prueba;
+    while (true) {
+        prueba.menu();
+    }
+    return 0;
 }
+
