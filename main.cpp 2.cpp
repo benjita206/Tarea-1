@@ -44,15 +44,6 @@ int Pregunta::getNivelTaxonomico(){
 
 void Pregunta::setEnunciado(string enunciado){
   this->enunciado=enunciado;
-  cout<< "---- Niveles Taxonomicos ----" << endl;
-  cout << "1. Recordar" << endl;
-  cout << "2. Entender" << endl;
-  cout << "3. Aplicar" << endl;
-  cout << "4. Analizar" << endl;
-  cout << "5. Evaluar" << endl;
-  cout << "6. Crear" << endl;
-  cout << "Ingrese el nivel Taxonomico: " << endl;
-
 }
 
 void Pregunta::setNivelTaxonomico(int nivel) {
@@ -409,7 +400,14 @@ Pregunta* Prueba::crearVerdaderoFalso() {
   cout << "Ingrese enunciado: ";
   getline(cin, enunciado);
 
-  cout << "Ingrese nivel taxonómico (1-5): ";
+  cout<< "---- Niveles Taxonomicos ----" << endl;
+  cout << "1. Recordar" << endl;
+  cout << "2. Entender" << endl;
+  cout << "3. Aplicar" << endl;
+  cout << "4. Analizar" << endl;
+  cout << "5. Evaluar" << endl;
+  cout << "6. Crear" << endl;
+  cout << "Ingrese el nivel Taxonomico: " << endl;
   cin >> nivel;
   cin.ignore();
 
@@ -433,7 +431,14 @@ Pregunta* Prueba::crearAlternativa() {
   cout << "Ingrese enunciado: ";
   getline(cin, enunciado);
 
-  cout << "Ingrese nivel taxonómico (1-5): ";
+  cout<< "---- Niveles Taxonomicos ----" << endl;
+  cout << "1. Recordar" << endl;
+  cout << "2. Entender" << endl;
+  cout << "3. Aplicar" << endl;
+  cout << "4. Analizar" << endl;
+  cout << "5. Evaluar" << endl;
+  cout << "6. Crear" << endl;
+  cout << "Ingrese el nivel Taxonomico: " << endl;
   cin >> nivel;
   cin.ignore();
 
@@ -523,11 +528,6 @@ void Prueba::calcularTiempo() {
   tiempo = 0;
   for (size_t i = 0; i < Items.size(); i++) {
     Item* item = Items[i];
-    // Necesitamos acceso a las preguntas internamente, así que ajusta Item si es necesario
-    // Aquí asumimos que agregas un método público:
-    // vector<Pregunta*> Item::getPreguntas();
-    // Si no lo tienes, avísame y te ayudo a agregarlo
-
     vector<Pregunta*> preguntas = item->getPreguntas();
 
     for (size_t j = 0; j < preguntas.size(); j++) {
