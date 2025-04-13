@@ -113,7 +113,7 @@ void VerdaderoFalso::mostrar() {
   cout << "Nivel taxonómico: " << getNivelTaxonomico() << endl;
   cout << "Respuesta: " << (respuesta ? "Verdadero" : "Falso") << endl;
   if (!respuesta) {
-    cout << "Justificación: " << justificacion << endl;
+    cout << "Justificación: " << getJustificacion() << endl;
   }
 }
 
@@ -267,10 +267,12 @@ class Prueba {
     Pregunta* crearAlternativa();
 };
 
+// Constructor de Prueba
 Prueba::Prueba() {
-  this->tiempo = 0;
+  this->tiempo = 0; // Definir por default que no tiene minutos
 }
 
+// Destructor de Prueba
 Prueba::~Prueba() {
   cout << "Destruyendo prueba" << endl;
   for (size_t i = 0; i < Items.size(); i++) {
@@ -278,15 +280,17 @@ Prueba::~Prueba() {
   }
 }
 
+// Metodos de Prueba
 void Prueba::menu(){
   int opcion;
-  cout<<"1. Crear item"<<endl;
-  cout<<"2. Actualizar item"<<endl;
-  cout<<"3. Eliminar item"<<endl;
-  cout<<"4. Mostrar item"<<endl;
-  cout<<"5. Mostrar tiempo"<<endl;
-  cout<<"6. Salir"<<endl;
-  cin>>opcion;
+  cout << "---- Menú ----" << endl;
+  cout << "1. Crear item" << endl;
+  cout << "2. Actualizar item" << endl;
+  cout << "3. Eliminar item" << endl;
+  cout << "4. Mostrar item" << endl;
+  cout << "5. Mostrar tiempo" << endl;
+  cout << "6. Salir" << endl;
+  cin >> opcion;
 
   switch(opcion){
     case 1:
