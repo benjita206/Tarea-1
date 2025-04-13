@@ -74,13 +74,10 @@ class VerdaderoFalso : public Pregunta {
   public:
     VerdaderoFalso(string enunciado, int nivel, bool respuesta, string justificacion);
     ~VerdaderoFalso();
-    bool getVyF();
     string getJustificacion();
     bool getRespuestaCorrecta();
-    void setVyF();
-    void setJustificacion();
-    void setRespuestaCorrecta();
-    void test();
+    void setJustificacion(string justificacion);
+    void setRespuestaCorrecta(bool respuesta);
     void mostrar();
 };
 
@@ -97,19 +94,36 @@ VerdaderoFalso::~VerdaderoFalso(){
 }
 
 //Getters y Setters
+string VerdaderoFalso::getJustificacion(){
+  return this->justificacion;
+}
 
-void VerdaderoFalso::mostrar() {
+bool VerdaderoFalso::getRespuestaCorrecta(){
+  return this->respuesta;
+}
+
+void VerdaderoFalso::setJustificacion(string justificacion){
+  this->justificacion = justificacion;
+}
+
+void VerdaderoFalso::setRespuestaCorrecta(bool respuesta){
+  this->respuesta = respuesta;
+}
+
+// Metodos de Verdadero y Falso
+void VerdaderoFalso::mostrar(){
   cout << "Tipo: Verdadero/Falso" << endl;
   cout << "Enunciado: " << getEnunciado() << endl;
   cout << "Nivel taxonómico: " << getNivelTaxonomico() << endl;
   cout << "Respuesta: " << (respuesta ? "Verdadero" : "Falso") << endl;
+
   if (!respuesta) {
     cout << "Justificación: " << getJustificacion() << endl;
   }
 }
 
 // Tercera Clase: Alternativa
-class Alternativa : public Pregunta {
+class Alternativa : public Pregunta{
   private:
       vector<string> alternativas;
       int respuestaCorrecta; // Índice de la alternativa correcta
@@ -123,42 +137,42 @@ class Alternativa : public Pregunta {
 
       void setAlternativas(vector<string> alternativas);
       void setRespuestaCorrecta(int respuestaCorrecta);
-      void testeo();
+      void creacion();
 
 };
 
 // Constructor de Alternativa
 Alternativa::Alternativa(string enunciado, int nivel, vector<string> alternativas, int respuestaCorrecta)
-: Pregunta(enunciado, nivel) {
+: Pregunta(enunciado, nivel){
     this->alternativas = alternativas;
     this->respuestaCorrecta = respuestaCorrecta;
 }
 
 // Destructor de Alternativas
-Alternativa::~Alternativa() {
+Alternativa::~Alternativa(){
   cout << "Destruyendo Alternativa" << endl;
 }
 
 //Getters y Setters
 
-vector<string> Alternativa::getAlternativas() {
+vector<string> Alternativa::getAlternativas(){
   return alternativas;
 }
 
-int Alternativa::getRespuestaCorrecta() {
+int Alternativa::getRespuestaCorrecta(){
   return respuestaCorrecta;
 }
 
-void Alternativa::setAlternativas(vector<string> alternativas) {
+void Alternativa::setAlternativas(vector<string> alternativas){
   this->alternativas = alternativas;
 }
 
-void Alternativa::setRespuestaCorrecta(int respuestaCorrecta) {
+void Alternativa::setRespuestaCorrecta(int respuestaCorrecta){
   this->respuestaCorrecta = respuestaCorrecta;
 }
 
 // Metodos de Alternativas
-void Alternativa::testeo() {
+void Alternativa::creacion(){
   int cantidadAlternativas;
   string alt;
   string enunciado;
@@ -184,7 +198,7 @@ void Alternativa::testeo() {
 }
 
 // Cuarta Clase: Item
-class Item {
+class Item{
   private:
     string nombre;
     vector<Pregunta*> preguntas;
@@ -197,7 +211,7 @@ class Item {
     void agregarPregunta(Pregunta* p);
     string getNombre();
     void mostrar();
-    vector<Pregunta*>& getPreguntas();
+    vector<Pregunta*> getPreguntas();
 
 };
 
@@ -232,7 +246,8 @@ void Item::mostrar() {
     cout << endl;
   }
 }
-vector<Pregunta*>& Item::getPreguntas() {
+
+vector<Pregunta*> Item::getPreguntas() {
     return preguntas;
 }
 
@@ -290,7 +305,9 @@ void Prueba::menu(){
     case 2:
       if (Items.empty()) {
         cout << "No hay items para actualizar.\n";
-      } else {
+      } 
+      
+      else {
         int index;
         mostrarItem();
         cout << "Ingrese el número del item a actualizar: ";
@@ -299,7 +316,9 @@ void Prueba::menu(){
 
         if (index >= 1 && index <= Items.size()) {
           actualizarItem(Items[index - 1]);
-        } else {
+        } 
+        
+        else {
           cout << "Índice no válido.\n";
         }
       }
@@ -331,10 +350,10 @@ void Prueba::menu(){
     case 4:
       mostrarItem();
 
-   case 5:
-    calcularTiempo();
-    mostrarTiempo();
-    break;
+    case 5:
+      calcularTiempo();
+      mostrarTiempo();
+      break;
 
     case 6:
       cout<<"Saliendo del programa"<<endl;
@@ -350,8 +369,17 @@ void Prueba::crearItem() {
   string nombreItem;
 
   cout << "Ingresa la cantidad de items: ";
-  cin >> cantidadItem;
-  cin.ignore();
+  while (true){
+    cin >> cantidadItem;
+    cin.ignore();
+
+    if (cantidadItem > 0)
+      break;
+    
+    else
+      cout << "Cantidad no permitida. Ingrese de nuevo: ";
+      
+  }
 
   for (int i = 0; i < cantidadItem; i++) {
     cout << "Ingresa el nombre del item: ";
@@ -360,8 +388,18 @@ void Prueba::crearItem() {
     Item* item = new Item(nombreItem);
 
     cout << "Ingresa la cantidad de preguntas: ";
-    cin >> cantidadPregunta;
-    cin.ignore();
+    
+    while (true){
+      cin >> cantidadPregunta;
+      cin.ignore();
+
+      if (cantidadPregunta > 0)
+        break;
+    
+      else
+        cout << "Cantidad no permitida. Ingrese de nuevo: ";
+      
+    }
 
     for (int j = 0; j < cantidadPregunta; j++) {
       cout << "\nPregunta " << j + 1 << ":" << endl;
@@ -392,7 +430,7 @@ void Prueba::crearItem() {
   }
 }
 
-Pregunta* Prueba::crearVerdaderoFalso() {
+Pregunta* Prueba::crearVerdaderoFalso(){
   string enunciado, justificacion;
   int nivel;
   bool respuesta;
@@ -422,7 +460,7 @@ Pregunta* Prueba::crearVerdaderoFalso() {
 
   return new VerdaderoFalso(enunciado, nivel, respuesta, justificacion);
 }
-Pregunta* Prueba::crearAlternativa() {
+Pregunta* Prueba::crearAlternativa(){
   string enunciado;
   int nivel, cantidad, correcta;
   vector<string> alternativas;
@@ -446,7 +484,7 @@ Pregunta* Prueba::crearAlternativa() {
   cin >> cantidad;
   cin.ignore();
 
-  for (int i = 0; i < cantidad; i++) {
+  for (int i = 0; i < cantidad; i++){
     cout << "Alternativa " << i << ": ";
     getline(cin, alt);
     alternativas.push_back(alt);
@@ -467,7 +505,7 @@ void Prueba::actualizarItem(Item* item) {
     }
 
     cout << "\nPreguntas en el item '" << item->getNombre() << "':\n";
-    for (size_t i = 0; i < preguntas.size(); ++i) {
+    for (size_t i = 0; i < preguntas.size(); ++i){
         cout << i + 1 << ". ";
         preguntas[i]->mostrar();
         cout << endl;
@@ -478,7 +516,7 @@ void Prueba::actualizarItem(Item* item) {
     cin >> indice;
     cin.ignore();
 
-    if (indice < 1 || indice > preguntas.size()) {
+    if (indice < 1 || indice > preguntas.size()){
         cout << "Índice inválido.\n";
         return;
     }
@@ -495,9 +533,13 @@ void Prueba::actualizarItem(Item* item) {
     Pregunta* nueva = nullptr;
     if (tipo == 1) {
         nueva = crearVerdaderoFalso();
-    } else if (tipo == 2) {
+    } 
+    
+    else if (tipo == 2) {
         nueva = crearAlternativa();
-    } else {
+    } 
+    
+    else {
         cout << "Tipo inválido. Cancelando actualización.\n";
         return;
     }
@@ -553,4 +595,3 @@ int main() {
     }
     return 0;
 }
-
