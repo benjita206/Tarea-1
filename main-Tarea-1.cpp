@@ -29,15 +29,23 @@ Pregunta::Pregunta(string enunciado, int nivelTaxonomico) {
 }
 
 // Destructor de Pregunta con su mensaje
-Pregunta::~Pregunta() { std::cout << "Se ha eliminado la Pregunta" << endl; }
+Pregunta::~Pregunta(){ 
+  cout << "Se ha eliminado la Pregunta" << endl; 
+}
 
-string Pregunta::getEnunciado() { return this->enunciado; }
+string Pregunta::getEnunciado(){ 
+  return this->enunciado; 
+}
 
-int Pregunta::getNivelTaxonomico() { return this->nivelTaxonomico; }
+int Pregunta::getNivelTaxonomico(){ 
+  return this->nivelTaxonomico; 
+}
 
-void Pregunta::setEnunciado(string enunciado) { this->enunciado = enunciado; }
+void Pregunta::setEnunciado(string enunciado){ 
+  this->enunciado = enunciado; 
+}
 
-void Pregunta::setNivelTaxonomico(int nivel) {
+void Pregunta::setNivelTaxonomico(int nivel){
   if (nivel >= 1 && nivel <= 6) {
     this->nivelTaxonomico = nivel;
   } else {
@@ -52,7 +60,7 @@ void Pregunta::mostrar() {
 }
 
 void Pregunta::mostrarNivelTaxonomico() {
-  cout << "el nivel taxonomico es " << this->nivelTaxonomico << endl;
+  cout << "el nivel taxonomico es " << this->getNivelTaxonomico() << endl;
 }
 
 // Segunda Clase: Verdadero y Falso
@@ -87,9 +95,13 @@ VerdaderoFalso::~VerdaderoFalso(){
 }
 
 // Getters y Setters
-string VerdaderoFalso::getJustificacion() { return this->justificacion; }
+string VerdaderoFalso::getJustificacion() { 
+  return this->justificacion; 
+}
 
-bool VerdaderoFalso::getRespuestaCorrecta() { return this->respuesta; }
+bool VerdaderoFalso::getRespuestaCorrecta() { 
+  return this->respuesta; 
+}
 
 void VerdaderoFalso::setJustificacion(string justificacion) {
   this->justificacion = justificacion;
@@ -145,9 +157,13 @@ Alternativa::~Alternativa() {
 
 // Getters y Setters
 
-vector<string> Alternativa::getAlternativas() { return alternativas; }
+vector<string> Alternativa::getAlternativas(){ 
+  return alternativas; 
+}
 
-int Alternativa::getRespuestaCorrecta() { return respuestaCorrecta; }
+int Alternativa::getRespuestaCorrecta() { 
+  return respuestaCorrecta; 
+}
 
 void Alternativa::setAlternativas(vector<string> alternativas) {
   this->alternativas = alternativas;
@@ -226,7 +242,9 @@ void Item::mostrar() {
   }
 }
 
-vector<Pregunta *> Item::getPreguntas() { return preguntas; }
+vector<Pregunta *> Item::getPreguntas() { 
+  return preguntas; 
+}
 
 // Quinta clase: Prueba
 class Prueba {
