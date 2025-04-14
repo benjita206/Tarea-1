@@ -388,7 +388,7 @@ void Prueba::crearItem() {
     Item* item = new Item(nombreItem);
 
     cout << "Ingresa la cantidad de preguntas: ";
-    
+
     while (true){
       cin >> cantidadPregunta;
       cin.ignore();
@@ -446,12 +446,29 @@ Pregunta* Prueba::crearVerdaderoFalso(){
   cout << "5. Evaluar" << endl;
   cout << "6. Crear" << endl;
   cout << "Ingrese el nivel Taxonomico: " << endl;
-  cin >> nivel;
-  cin.ignore();
+
+  while(true){
+    cin >> nivel;
+    cin.ignore();
+
+    if (nivel < 1 || nivel > 6)
+      cout << "Opción inválida, intenta nuevamente: ";
+
+    else
+      break;
+  }
 
   cout << "Ingrese la respuesta (1 para Verdadero, 0 para Falso): ";
-  cin >> respuesta;
-  cin.ignore();
+  while(true){
+    cin >> respuesta;
+    cin.ignore();
+
+    if(respuesta < 0 || respuesta > 1)
+      cout << "Opción inválida, intenta nuevamente: ";
+
+    else
+      break;
+  }
 
   if (!respuesta) {
     cout << "Ingrese justificación: ";
@@ -460,6 +477,7 @@ Pregunta* Prueba::crearVerdaderoFalso(){
 
   return new VerdaderoFalso(enunciado, nivel, respuesta, justificacion);
 }
+
 Pregunta* Prueba::crearAlternativa(){
   string enunciado;
   int nivel, cantidad, correcta;
@@ -477,12 +495,30 @@ Pregunta* Prueba::crearAlternativa(){
   cout << "5. Evaluar" << endl;
   cout << "6. Crear" << endl;
   cout << "Ingrese el nivel Taxonomico: " << endl;
-  cin >> nivel;
-  cin.ignore();
+
+  while(true){
+    cin >> nivel;
+    cin.ignore();
+
+    if (nivel < 1 || nivel > 6)
+      cout << "Opción inválida, intenta nuevamente: ";
+
+    else
+      break;
+  }
 
   cout << "Ingrese cantidad de alternativas: ";
-  cin >> cantidad;
-  cin.ignore();
+
+  while(true){
+    cin >> cantidad;
+    cin.ignore();
+
+    if (cantidad < 2)
+      cout << "Cantidad no permitida. Ingrese de nuevo: ";
+
+    else
+      break;
+  }
 
   for (int i = 0; i < cantidad; i++){
     cout << "Alternativa " << i << ": ";
@@ -496,6 +532,7 @@ Pregunta* Prueba::crearAlternativa(){
 
   return new Alternativa(enunciado, nivel, alternativas, correcta);
 }
+
 void Prueba::actualizarItem(Item* item) {
     vector<Pregunta*> preguntas = item->getPreguntas();
 
@@ -566,6 +603,7 @@ void Prueba::mostrarItem() {
     Items[i]->mostrar();
   }
 }
+
 void Prueba::calcularTiempo() {
   tiempo = 0;
   for (size_t i = 0; i < Items.size(); i++) {
@@ -575,14 +613,13 @@ void Prueba::calcularTiempo() {
     for (size_t j = 0; j < preguntas.size(); j++) {
       // Deducción de tipo por dynamic_cast
       if (dynamic_cast<VerdaderoFalso*>(preguntas[j])) {
-        tiempo += 1; // 1 minuto
+        tiempo += 3; // 3 minuto
       } else if (dynamic_cast<Alternativa*>(preguntas[j])) {
         tiempo += 2; // 2 minutos
       }
     }
   }
 }
-
 
 void Prueba::mostrarTiempo() {
   cout << "El tiempo de la prueba es de " << tiempo << " minutos." << endl;
