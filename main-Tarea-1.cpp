@@ -47,7 +47,7 @@ void Pregunta::setEnunciado(string enunciado){
 }
 
 void Pregunta::setNivelTaxonomico(int nivel) {
-  if (nivel >= 1 && nivel <= 5) {
+  if (nivel >= 1 && nivel <= 6) {
       this->nivelTaxonomico = nivel;
   } else {
       cout << "Nivel inválido" << endl;
@@ -301,6 +301,7 @@ void Prueba::menu(){
   switch(opcion){
     case 1:
       crearItem();
+      return;
 
     case 2:
       if (Items.empty()) {
@@ -348,7 +349,14 @@ void Prueba::menu(){
       break;
 
     case 4:
-      mostrarItem();
+      if (Items.empty()) {
+        cout << "No hay items para mostrar.\n";
+      }
+
+      else
+        mostrarItem();
+
+      return;
 
     case 5:
       calcularTiempo();
