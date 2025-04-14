@@ -296,6 +296,7 @@ void Prueba::menu(){
   cout << "4. Mostrar item" << endl;
   cout << "5. Mostrar tiempo" << endl;
   cout << "6. Salir" << endl;
+  cout << "Ingrese una opción: \n"<< endl;
   cin >> opcion;
 
   switch(opcion){
@@ -307,7 +308,7 @@ void Prueba::menu(){
       if (Items.empty()) {
         cout << "No hay items para actualizar.\n";
       } 
-      
+
       else {
         int index;
         mostrarItem();
@@ -318,7 +319,7 @@ void Prueba::menu(){
         if (index >= 1 && index <= Items.size()) {
           actualizarItem(Items[index - 1]);
         } 
-        
+
         else {
           cout << "Índice no válido.\n";
         }
@@ -383,10 +384,10 @@ void Prueba::crearItem() {
 
     if (cantidadItem > 0)
       break;
-    
+
     else
       cout << "Cantidad no permitida. Ingrese de nuevo: ";
-      
+
   }
 
   for (int i = 0; i < cantidadItem; i++) {
@@ -403,10 +404,10 @@ void Prueba::crearItem() {
 
       if (cantidadPregunta > 0)
         break;
-    
+
       else
         cout << "Cantidad no permitida. Ingrese de nuevo: ";
-      
+
     }
 
     for (int j = 0; j < cantidadPregunta; j++) {
@@ -441,7 +442,7 @@ void Prueba::crearItem() {
 Pregunta* Prueba::crearVerdaderoFalso(){
   string enunciado, justificacion;
   int nivel;
-  bool respuesta;
+  int respuesta;
 
   cout << "Ingrese enunciado: ";
   getline(cin, enunciado);
@@ -467,18 +468,14 @@ Pregunta* Prueba::crearVerdaderoFalso(){
   }
 
   cout << "Ingrese la respuesta (1 para Verdadero, 0 para Falso): ";
-  while(true){
+  
     cin >> respuesta;
     cin.ignore();
 
     if(respuesta < 0 || respuesta > 1)
       cout << "Opción inválida, intenta nuevamente: ";
 
-    else
-      break;
-  }
-
-  if (!respuesta) {
+    if (!respuesta) {
     cout << "Ingrese justificación: ";
     getline(cin, justificacion);
   }
@@ -579,11 +576,11 @@ void Prueba::actualizarItem(Item* item) {
     if (tipo == 1) {
         nueva = crearVerdaderoFalso();
     } 
-    
+
     else if (tipo == 2) {
         nueva = crearAlternativa();
     } 
-    
+
     else {
         cout << "Tipo inválido. Cancelando actualización.\n";
         return;
@@ -632,12 +629,15 @@ void Prueba::calcularTiempo() {
 void Prueba::mostrarTiempo() {
   cout << "El tiempo de la prueba es de " << tiempo << " minutos." << endl;
 }
-
 int main() {
     Prueba prueba;
     while (true) {
         prueba.menu();
-        break;
+        char continuar;
+        cout << "¿Desea realizar otra acción? (s/n): ";
+        cin >> continuar;
+        cin.ignore();
+        if (continuar != 's' && continuar != 'S') break;
     }
     return 0;
 }
