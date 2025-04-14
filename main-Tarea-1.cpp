@@ -467,21 +467,17 @@ Pregunta* Prueba::crearVerdaderoFalso(){
       break;
   }
 
-  cout << "Ingrese la respuesta (1 para Verdadero, 0 para Falso): ";
-  
+  cout << "Ingrese la respuesta (true o false): ";
     cin >> respuesta;
     cin.ignore();
 
-    if(respuesta < 0 || respuesta > 1)
-      cout << "Opción inválida, intenta nuevamente: ";
-
     if (!respuesta) {
-    cout << "Ingrese justificación: ";
-    getline(cin, justificacion);
-  }
+      cout << "Ingrese justificación: ";
+      getline(cin, justificacion);
+    }
 
-  return new VerdaderoFalso(enunciado, nivel, respuesta, justificacion);
-}
+    return new VerdaderoFalso(enunciado, nivel, respuesta, justificacion);
+  }
 
 Pregunta* Prueba::crearAlternativa(){
   string enunciado;
